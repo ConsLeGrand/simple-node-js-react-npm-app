@@ -1,15 +1,18 @@
 pipeline {
     agent any
-    tools {nodejs "nodejs"}
+
     stages {
-        stage('Build') {
+        stage('Clone repository') {
             steps {
-                sh 'npm install'
+                git 'https://github.com/fapathe/test.git'
             }
         }
-        stage('Test') { 
+        stage('Print Hello World') {
             steps {
-                sh './jenkins/scripts/test.sh' 
+                script {
+                    def content = readFile 'hello-world.txt'
+                    echo content
+                }
             }
         }
     }
