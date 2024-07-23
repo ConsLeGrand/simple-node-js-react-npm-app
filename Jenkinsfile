@@ -7,7 +7,7 @@ pipeline {
                 sh 'npm install'
             }
         }
-        stage('Test') { 
+        stage('Droit') { 
             steps {
                 sh 'sudo chown -R 1001230000:0 "/.npm"' 
             }
