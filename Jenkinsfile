@@ -1,18 +1,21 @@
 pipeline {
     agent any
-
     stages {
-        stage('Clone repository') {
+        stage('Build') {
             steps {
-                git 'https://github.com/fapathe/test.git'
+                sh 'npm install'
             }
         }
-        stage('Print Hello World') {
+        stage('Test') {
             steps {
-                script {
-                    def content = readFile 'hello-world.txt'
-                    echo content
-                }
+                sh './jenkins/scripts/test.sh'
+            }
+        }
+        stage('Deliver') { 
+            steps {
+                sh './jenkins/scripts/deliver.sh' 
+                input message: 'Finished using the web site? (Click "Proceed" to continue)' 
+                sh './jenkins/scripts/kill.sh' 
             }
         }
     }
